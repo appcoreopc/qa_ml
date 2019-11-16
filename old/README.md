@@ -5,6 +5,12 @@
 ### https://arxiv.org/abs/1810.04805
 
 
+### Dummies guide 
+https://towardsdatascience.com/bert-for-dummies-step-by-step-tutorial-fb90890ffe03
+
+https://colab.research.google.com/drive/1ywsvwO6thOVOrfagjjfuxEf6xVRxbUNO
+
+
 ### Technical report of QA 
 ### These are the top https://arxiv.org/abs/1909.10772
 
@@ -13,6 +19,7 @@
 
 # This Python 3 environment comes with many helpful analytics libraries installed
 # It is defined by the kaggle/python docker image: https://github.com/kaggle/docker-python
+
 
 import numpy as np # linear algebra
 import pandas as pd # data processing, CSV file I/O (e.g. pd.read_csv)
@@ -326,3 +333,8 @@ if FLAGS.do_predict:
 
 
 
+### what confusion matrix overfit looks like 
+
+Other work 
+
+Contextual representations including Semi-supervised Sequence Learning, Generative Pre-Training, ELMo, the OpenAI Transformer, ULMFit and the Transformer
