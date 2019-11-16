@@ -2,6 +2,10 @@
 #https://github.com/google-research/language/tree/master/language/question_answering/bert_joint
 
 ### BERT actual implementation code is here : https://github.com/google-research/bert
+### https://arxiv.org/abs/1810.04805
+
+
+### Technical report of QA 
 ### These are the top https://arxiv.org/abs/1909.10772
 
 ## The notebook https://colab.sandbox.google.com/github/tensorflow/tpu/blob/master/tools/colab/bert_finetuning_with_cloud_tpus.ipynb
