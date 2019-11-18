@@ -338,3 +338,31 @@ if FLAGS.do_predict:
 Other work 
 
 Contextual representations including Semi-supervised Sequence Learning, Generative Pre-Training, ELMo, the OpenAI Transformer, ULMFit and the Transformer
+
+
+Guess the input required by BERT 
+
+# Upload the train file from your local drive
+from google.colab import files
+uploaded = files.upload()
+
+# Upload data from Google Drive
+from google.colab import drive
+drive.mount('/drive')
+
+#
+# queries are stored in the variable query_data_train
+# correct intent labels are stored in the variable labels
+#
+
+# add special tokens for BERT to work properly
+sentences = ["[CLS] " + query + " [SEP]" for query in query_data_train]
+print(sentence[0])
+
+# Tokenize with BERT tokenizer
+tokenizer = BertTokenizer.from_pretrained('bert-base-uncased', do_lower_case=True)
+tokenized_texts = [tokenizer.tokenize(sent) for sent in sentences]
+print ("Tokenize the first sentence:")
+print (tokenized_texts[0])
+
+
