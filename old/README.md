@@ -11,6 +11,11 @@ https://towardsdatascience.com/bert-for-dummies-step-by-step-tutorial-fb90890ffe
 https://colab.research.google.com/drive/1ywsvwO6thOVOrfagjjfuxEf6xVRxbUNO
 
 
+### Some tutorials for pytorch
+
+### https://pytorch.org/tutorials/beginner/blitz/cifar10_tutorial.html#sphx-glr-beginner-blitz-cifar10-tutorial-py
+
+
 ### Technical report of QA 
 ### These are the top https://arxiv.org/abs/1909.10772
 
