@@ -8,6 +8,12 @@
 ### Dummies guide 
 https://towardsdatascience.com/bert-for-dummies-step-by-step-tutorial-fb90890ffe03
 
+
+The purporse of this notebook is to classify whether a sentence is gramatically correct or not. 
+Binary classification problem
+
+## Collab example 
+
 https://colab.research.google.com/drive/1ywsvwO6thOVOrfagjjfuxEf6xVRxbUNO
 
 
