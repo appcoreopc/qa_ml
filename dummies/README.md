@@ -127,10 +127,11 @@ tensor([[  101,  2002,  2939,  ...,     0,     0,     0],
         [  101,  2348, 23848,  ...,     0,     0,     0],
         [  101, 13723,  8487,  ...,     0,     0,     0]])
 
+train_labels
+tensor([1, 1, 1,  ..., 1, 0, 1])
 
 
 validation_inputs
-
 tensor([[  101,  1996, 13176,  ...,     0,     0,     0],
         [  101,  2057,  6955,  ...,     0,     0,     0],
         [  101,  2984,  7659,  ...,     0,     0,     0],
@@ -153,8 +154,27 @@ validation_masks = torch.tensor(validation_masks)
 
 
 
+### Best advise ###
 
+# Select a batch size for training. For fine-tuning BERT on a specific task, the authors recommend a batch size of 16 or 32
+batch_size = 32
 
+# Create an iterator of our data with torch DataLoader. This helps save on memory during training because, unlike a for loop, 
+# with an iterator the entire dataset does not need to be loaded into memory
 
+train_data = TensorDataset(train_inputs, train_masks, train_labels)
+train_sampler = RandomSampler(train_data)
+train_dataloader = DataLoader(train_data, sampler=train_sampler, batch_size=batch_size)
+
+validation_data = TensorDataset(validation_inputs, validation_masks, validation_labels)
+validation_sampler = SequentialSampler(validation_data)
+validation_dataloader = DataLoader(validation_data, sampler=validation_sampler, batch_size=batch_size)
+
+###
+### STOP 
+### From this point onwards we are using BertForSequenceClassification 
+### https://github.com/huggingface/pytorch-pretrained-BERT/blob/master/pytorch_pretrained_bert/modeling.py#L1129)
+
+## Bert is good for a lot of things, but for this task, it is classification
 
 
