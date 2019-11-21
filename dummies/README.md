@@ -173,8 +173,11 @@ validation_dataloader = DataLoader(validation_data, sampler=validation_sampler, 
 ###
 ### STOP 
 ### From this point onwards we are using BertForSequenceClassification 
-### https://github.com/huggingface/pytorch-pretrained-BERT/blob/master/pytorch_pretrained_bert/modeling.py#L1129)
+### https://huggingface.co/transformers/model_doc/bert.html#bertforsequenceclassification
 
 ## Bert is good for a lot of things, but for this task, it is classification
+
+From input above, feed it into our model and the output is the length 768 hidden state vector corresponding to this token. The additional layer that we've added on top consists of untrained linear neurons of size [hidden_state, number_of_labels], so [768,2], meaning that the output of BERT plus our classification layer is a vector of two numbers representing the "score" for "grammatical/non-grammatical" that are then fed into cross-entropy loss. 
+
 
 
