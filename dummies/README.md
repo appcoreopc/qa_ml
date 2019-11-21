@@ -50,6 +50,76 @@ print ("Tokenize the first sentence:")
 print (tokenized_texts[0])
 
 
+### tokenize text looks like this 
+
+'.',
+  '[SEP]'],
+ ['[CLS]',
+  'the',
+  'moral',
+  'destruction',
+  'of',
+  'the',
+  'president',
+  'was',
+  'certainly',
+  'not',
+  'helpful',
+  '.',
+  '[SEP]'],
+ ['[CLS]',
+  'mary',
+  'wants',
+  'to',
+  'wear',
+  'nice',
+  'blue',
+  'german',
+  'dress',
+
+
+
+# Set the maximum sequence length. The longest sequence in our training set is 47, but we'll leave room on the end anyway. 
+# In the original paper, the authors used a length of 512.
+MAX_LEN = 128
+
+# Use the BERT tokenizer to convert the tokens to their index numbers in the BERT vocabulary
+input_ids = [tokenizer.convert_tokens_to_ids(x) for x in tokenized_texts]
+
+# Pad our input tokens
+input_ids = pad_sequences(input_ids, maxlen=MAX_LEN, dtype="long", truncating="post", padding="post")
+
+array([[ 101, 2256, 2814, ...,    0,    0,    0],
+       [ 101, 2028, 2062, ...,    0,    0,    0],
+       [ 101, 2028, 2062, ...,    0,    0,    0],
+       ...,
+       [ 101, 2009, 2003, ...,    0,    0,    0],
+       [ 101, 1045, 2018, ...,    0,    0,    0],
+       [ 101, 2054, 2035, ...,    0,    0,    0]])
+
+
+##############################################
+# Create attention masks
+attention_masks = []
+##############################################
+
+# Create a mask of 1s for each token followed by 0s for padding
+for seq in input_ids:
+  seq_mask = [float(i>0) for i in seq]
+  attention_masks.append(seq_mask)
+
+  
+
+# Use train_test_split to split our data into train and validation sets for training
+
+train_inputs, validation_inputs, train_labels, validation_labels = train_test_split(input_ids, labels, 
+                                                            random_state=2018, test_size=0.1)
+train_masks, validation_masks, _, _ = train_test_split(attention_masks, input_ids,
+                                             random_state=2018, test_size=0.1)
+
+
+
+
 
 
 
