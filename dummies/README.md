@@ -108,19 +108,48 @@ for seq in input_ids:
   seq_mask = [float(i>0) for i in seq]
   attention_masks.append(seq_mask)
 
-  
+
 
 # Use train_test_split to split our data into train and validation sets for training
 
-train_inputs, validation_inputs, train_labels, validation_labels = train_test_split(input_ids, labels, 
-                                                            random_state=2018, test_size=0.1)
-train_masks, validation_masks, _, _ = train_test_split(attention_masks, input_ids,
-                                             random_state=2018, test_size=0.1)
+train_inputs, validation_inputs, train_labels, validation_labels = train_test_split(input_ids, labels, random_state=2018, test_size=0.1)
+
+train_masks, validation_masks, _, _ = train_test_split(attention_masks, input_ids, random_state=2018, test_size=0.1)
+
+
+train_inputs looks like this 
+
+tensor([[  101,  2002,  2939,  ...,     0,     0,     0],
+        [  101,  1998,  2009,  ...,     0,     0,     0],
+        [  101, 15609,  2038,  ...,     0,     0,     0],
+        ...,
+        [  101,  2048,  3719,  ...,     0,     0,     0],
+        [  101,  2348, 23848,  ...,     0,     0,     0],
+        [  101, 13723,  8487,  ...,     0,     0,     0]])
 
 
 
+validation_inputs
+
+tensor([[  101,  1996, 13176,  ...,     0,     0,     0],
+        [  101,  2057,  6955,  ...,     0,     0,     0],
+        [  101,  2984,  7659,  ...,     0,     0,     0],
+        ...,
+        [  101,  2151,  5205,  ...,     0,     0,     0],
+        [  101,  2002,  1005,  ...,     0,     0,     0],
+        [  101, 22725,  2626,  ...,     0,     0,     0]])
+
+    
 
 
+# Convert all of our data into torch tensors, the required datatype for our model
+
+train_inputs = torch.tensor(train_inputs)
+validation_inputs = torch.tensor(validation_inputs)
+train_labels = torch.tensor(train_labels)
+validation_labels = torch.tensor(validation_labels)
+train_masks = torch.tensor(train_masks)
+validation_masks = torch.tensor(validation_masks)
 
 
 
