@@ -179,5 +179,27 @@ validation_dataloader = DataLoader(validation_data, sampler=validation_sampler, 
 
 From input above, feed it into our model and the output is the length 768 hidden state vector corresponding to this token. The additional layer that we've added on top consists of untrained linear neurons of size [hidden_state, number_of_labels], so [768,2], meaning that the output of BERT plus our classification layer is a vector of two numbers representing the "score" for "grammatical/non-grammatical" that are then fed into cross-entropy loss. 
 
+# Load BertForSequenceClassification, the pretrained BERT model with a single linear classification layer on top. 
+
+model = BertForSequenceClassification.from_pretrained("bert-base-uncased", num_labels=2)
+model.cuda()
+
+param_optimizer = list(model.named_parameters())
+no_decay = ['bias', 'gamma', 'beta']
+optimizer_grouped_parameters = [
+    {'params': [p for n, p in param_optimizer if not any(nd in n for nd in no_decay)],
+     'weight_decay_rate': 0.01},
+    {'params': [p for n, p in param_optimizer if any(nd in n for nd in no_decay)],
+     'weight_decay_rate': 0.0}
+]
 
 
+# This variable contains all of the hyperparemeter information our training loop needs
+optimizer = BertAdam(optimizer_grouped_parameters,
+                     lr=2e-5,
+                     warmup=.1)
+
+
+                    
+
+            
