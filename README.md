@@ -17,3 +17,11 @@ import bert_optimization as optimization
 import bert_tokenization as tokenization
 
 
+
+More examples and quickstarts:-
+
+https://huggingface.co/transformers/quickstart.html
+
+
+
+
