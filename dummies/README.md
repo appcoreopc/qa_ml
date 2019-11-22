@@ -199,7 +199,97 @@ optimizer = BertAdam(optimizer_grouped_parameters,
                      lr=2e-5,
                      warmup=.1)
 
+#######################################################################
+## NOTICE  forward and backward pass happening here 
+#######################################################################
+## LOOK for and pay attention to the code below :
+## loss = model(b_input_ids, token_type_ids=None, attention_mask=b_input_mask, labels=b_labels)
+##    train_loss_set.append(loss.item())    
+### Backward pass
+##    loss.backward()
 
-                    
+# Function to calculate the accuracy of our predictions vs labels
+def flat_accuracy(preds, labels):
+    pred_flat = np.argmax(preds, axis=1).flatten()
+    labels_flat = labels.flatten()
+    return np.sum(pred_flat == labels_flat) / len(labels_flat)
 
-            
+
+# Store our loss and accuracy for plotting
+train_loss_set = []
+
+# Number of training epochs (authors recommend between 2 and 4)
+epochs = 4
+
+# trange is a tqdm wrapper around the normal python range
+for _ in trange(epochs, desc="Epoch"):
+  
+  
+  # Training
+  
+  # Set our model to training mode (as opposed to evaluation mode)
+  model.train()
+  
+  # Tracking variables
+  tr_loss = 0
+  nb_tr_examples, nb_tr_steps = 0, 0
+  
+  # Train the data for one epoch
+  for step, batch in enumerate(train_dataloader):
+    # Add batch to GPU
+    batch = tuple(t.to(device) for t in batch)
+    # Unpack the inputs from our dataloader
+    b_input_ids, b_input_mask, b_labels = batch
+    # Clear out the gradients (by default they accumulate)
+    optimizer.zero_grad()
+    # Forward pass
+    loss = model(b_input_ids, token_type_ids=None, attention_mask=b_input_mask, labels=b_labels)
+    train_loss_set.append(loss.item())    
+    # Backward pass
+    loss.backward()
+    # Update parameters and take a step using the computed gradient
+    optimizer.step()
+    
+    
+    # Update tracking variables
+    tr_loss += loss.item()
+    nb_tr_examples += b_input_ids.size(0)
+    nb_tr_steps += 1
+
+  print("Train loss: {}".format(tr_loss/nb_tr_steps))
+    
+    
+  # Validation
+
+  # Put model in evaluation mode to evaluate loss on the validation set
+  model.eval()
+
+  # Tracking variables 
+  eval_loss, eval_accuracy = 0, 0
+  nb_eval_steps, nb_eval_examples = 0, 0
+
+  # Evaluate data for one epoch
+  for batch in validation_dataloader:
+    # Add batch to GPU
+    batch = tuple(t.to(device) for t in batch)
+    # Unpack the inputs from our dataloader
+    b_input_ids, b_input_mask, b_labels = batch
+    # Telling the model not to compute or store gradients, saving memory and speeding up validation
+    with torch.no_grad():
+      # Forward pass, calculate logit predictions
+      logits = model(b_input_ids, token_type_ids=None, attention_mask=b_input_mask)
+    
+    # Move logits and labels to CPU
+    logits = logits.detach().cpu().numpy()
+    label_ids = b_labels.to('cpu').numpy()
+
+    tmp_eval_accuracy = flat_accuracy(logits, label_ids)
+    
+    eval_accuracy += tmp_eval_accuracy
+    nb_eval_steps += 1
+
+  print("Validation Accuracy: {}".format(eval_accuracy/nb_eval_steps))
+
+
+
+
