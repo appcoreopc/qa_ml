@@ -23,10 +23,8 @@ More examples and quickstarts:-
 https://huggingface.co/transformers/quickstart.html
 
 
-
 Use collab and play with hugging face 
 https://colab.research.google.com/drive/1ywsvwO6thOVOrfagjjfuxEf6xVRxbUNO
-
 
 Hugging face intro to different types of NLP
 
